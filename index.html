@@ -59,6 +59,7 @@
               <li id="menu-page-one"><a href="#">Page 1</a></li>
               <li id="menu-page-two"><a href="#">HTX playlisten</a></li>
               <li id="menu-page-tre"><a href="#" onclick="getLocation()">Weather</a></li>
+              <li id="menu-page-four"><a href="#">Tør du kigge</a></li>
             </ul>
           </div>
         </nav>
@@ -98,15 +99,38 @@
         </div>
       </div>
     </div>
-      <!-------------------------------------------------------------------->
-      <div id="page-tre">
-        <div class="row">
-
+    <!-------------------------------------------------------------------->
+    <div id="page-tre">
+      <div class="row">
+      </div>
+      <div id="api-component-page-tre">
+      </div>
+    </div>
+    <!-------------------------------------------------------------------->
+    <div id="page-four">
+      <div class="row">
+        <div class="col s12 m6">
+          <h4>Tør du klikke</h4>
+          <a id="menu-ip" class="btn-large waves-effect red" onclick="ip()"><i class="material-icons">face</i></a>
         </div>
-        <div id="api-component-page-tre">
+      </div>
+      <div id="api-component-page-four">
+      </div>
+    </div>
+    <div id="iphiden">
+      <div class="row">
+        <div class="col s12 m6">
+          <h4>Bange?</h4>
+          <a class="btn-large waves-effect" onclick="ja()">Ja</a>
+          <a class="btn-large waves-effect red" onclick="nej()">Nej</a>
         </div>
       </div>
     </div>
+
+
+
+
+
     <!-- Page functionality
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script>
@@ -147,6 +171,24 @@
       }
     </script>
     <!-------------------------------------------------------------------->
+    <script>
+      function ip() {
+        var ipActivitySource = document.getElementById("ip-activity-template").innerHTML;
+        var ipActivityTemplate = Handlebars.compile(ipActivitySource);
+        var ipActivityPlaceholder = document.getElementById('api-component-page-four');
+
+        $.ajax({
+          url: "https://ipapi.co/json/"
+          //"http://api.openweathermap.org/data/2.5/weather?lat=55.7170688&lon=11.710464&appid=641e769436bd08fa8c6171a8d70ba855&units=metric",
+        }).done(function (data) {
+          console.log(data)
+          ipActivityPlaceholder.innerHTML = ipActivityTemplate(data);
+        });
+
+      }
+    </script>
+
+
 
 
 
@@ -213,16 +255,7 @@
               <span class="card-title">Tid og Sted</span>
               <p>{{name}}</p>
               <p>{{sys.country}}</p>
-              <p>
-                  <script>
-                  var x = {{dt}};
-                  var y = 1000;
-                  var z = {{dt}} * 1000;
-                  document.getElementById("demo").innerHTML = z;
-                  </script>
-                
-                
-                {{dt}} Unix Time</p>
+              <p>{{dt}} Unix Time</p>
               <span class="card-title">Temp</span>
               <p>{{main.temp}} C</p>
               <p>{{main.temp_min}} C min - {{main.temp_max}} C max</p>
@@ -242,8 +275,34 @@
           </div>
         </div>
       </div>
+    </script>
 
-</script>
+    <script id="ip-activity-template" type="text/x-handlebars-template">
+      <div class="row">
+          <div class="col s12 m6">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <span class="card-title">{{API}}</span>
+                <div class="card-image">
+                  <div class="mapouter"><div class="gmap_canvas"><iframe width="370" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q={{latitude}}%20{{longitude}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                  </div>
+                </div>
+                <p>
+                  
+                    <ul>
+                    <li>By: {{city}}</li>
+                    <li>Postnummer: {{postal}}</li>
+                    <li>HTTPS: {{HTTPS}}</li>
+                  </ul>
+                </p>
+              </div>
+              <div class="card-action">
+                <a href="{{Link}}">{{Link}}</a>
+              </div>
+            </div>
+        </div>
+      </div>
+      </script>
     <!-- Page functionality - Javascripts
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <script>
@@ -279,6 +338,8 @@
       getApiData(1)
       $('#page-two').hide();
       $('#page-tre').hide();
+      $('#page-four').hide();
+      $('#iphiden').hide();
 
       //When someone clicks the page one navigation link
       //This is the second way to make something happen, when you click an HTML element
@@ -287,18 +348,40 @@
         $('#page-one').show();
         $('#page-two').hide();
         $('#page-tre').hide();
+        $('#page-four').hide();
+        $('#iphiden').hide();
       });
       //When someone clicks the page two navigation link
       $('#menu-page-two').click(function () {
         $('#page-one').hide();
         $('#page-two').show();
         $('#page-tre').hide();
+        $('#page-four').hide();
+        $('#iphiden').hide();
       });
 
       $('#menu-page-tre').click(function () {
         $('#page-one').hide();
         $('#page-two').hide();
         $('#page-tre').show();
+        $('#page-four').hide();
+        $('#iphiden').hide();
+      });
+
+      $('#menu-page-four').click(function () {
+        $('#page-one').hide();
+        $('#page-two').hide();
+        $('#page-tre').hide();
+        $('#page-four').show();
+        $('#iphiden').hide();
+      });
+
+      $('#menu-ip').click(function () {
+        $('#page-one').hide();
+        $('#page-two').hide();
+        $('#page-tre').hide();
+        $('#page-four').show();
+        $('#iphiden').show();
       });
     </script>
 
