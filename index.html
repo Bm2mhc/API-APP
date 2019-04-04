@@ -186,6 +186,9 @@
         });
 
       }
+
+
+      
     </script>
 
 
@@ -282,7 +285,7 @@
           <div class="col s12 m6">
             <div class="card blue-grey darken-1">
               <div class="card-content white-text">
-                <span class="card-title">{{API}}</span>
+                <span class="card-title">Din lokation og IP</span>
                 <div class="card-image">
                   <div class="mapouter"><div class="gmap_canvas"><iframe width="370" height="300" id="gmap_canvas" src="https://maps.google.com/maps?q={{latitude}}%20{{longitude}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                   </div>
@@ -292,7 +295,9 @@
                     <ul>
                     <li>By: {{city}}</li>
                     <li>Postnummer: {{postal}}</li>
-                    <li>HTTPS: {{HTTPS}}</li>
+                    <li>Region: {{region}}</li>
+                    <li>IP: {{ip}}</li>
+                    <li>Tidszone: {{timezone}}</li>
                   </ul>
                 </p>
               </div>
